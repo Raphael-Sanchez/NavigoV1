@@ -1,0 +1,41 @@
+<head>
+    <link href="{{ asset('css/template_navigo.css') }}" rel="stylesheet" />
+</head>
+<body>
+    <h1>Votre Pass Navigo</h1>
+    <p><a href="{{ path('user_homepage') }}">Retour</a></p>
+    <div id="block-navigo">
+        <div id="left-side">
+            <ul>
+                <li>Votre carte Navigo est</li>
+                <li>strictement personnelle</li>
+                <li>et doit être validée</li>
+                <li>sur les appareils de</li>
+                <li>validation rencontrés</li>
+                <li>au cours du voyage.</li>
+                <li>Les conditions générales</li>
+                <li>d'utilisation sont</li>
+                <li>disponibles auprès</li>
+                <li>des transporteurs.</li>
+            </ul>
+            <p class="firstname">{{ user.firstName|capitalize }}</p>
+            <p class="lastname">{{ user.lastName|upper }}</p>
+            <p class="card-number">{{ user.cardNumber|upper }}</p>
+        </div>
+        <div id="right-side">
+            <img src="{{ asset('img/puce.png') }}" alt="img puce electronique" class="microship">
+            <img src="{{ asset('img/stif.png') }}" alt="stif img" class="stif">
+            <div class="block-photo">
+                {% if cardPhoto is defined and cardPhoto is not null %}
+                    <div class="card-photo" style="background-image: url({{ asset('uploads/users/' ~ cardPhoto) }});">
+                {% else %}
+                    {{ form_start(form) }}
+                        {{ form_row(form.photo) }}
+                        {{ form_errors(form.photo) }}
+                        {{ form_widget(form.photo) }}
+                    {{ form_end(form) }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>

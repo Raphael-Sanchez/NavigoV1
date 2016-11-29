@@ -1,0 +1,6 @@
+<body>
+    <h2>Bienvenue sur votre home {{ user.firstName|capitalize  }} !</h2>
+    <div><a href="{{ path('logout') }}">Se déconnecter</a></div>
+    <br>
+    <a href="{{ path('navigo_template') }}">Afficher mon Pass Navigo</a>
+</body>

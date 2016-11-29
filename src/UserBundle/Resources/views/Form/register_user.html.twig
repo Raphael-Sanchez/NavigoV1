@@ -1,0 +1,39 @@
+<h1>Créer un compte</h1>
+
+{{ form_start(form) }}
+
+<div>
+    {{ form_label(form.firstName) }}
+    {{ form_errors(form.firstName) }}
+    {{ form_widget(form.firstName) }}
+</div>
+<div>
+    {{ form_label(form.lastName) }}
+    {{ form_errors(form.lastName) }}
+    {{ form_widget(form.lastName) }}
+</div>
+<div>
+    {{ form_label(form.card.cardNumber) }}
+    {{ form_errors(form.card.cardNumber) }}
+    {{ form_widget(form.card.cardNumber) }}
+</div>
+<div>
+    {{ form_label(form.password) }}
+    {{ form_errors(form.password) }}
+    {{ form_widget(form.password) }}
+</div>
+<div>
+    {{ form_label(form.passwordCheck) }}
+    {{ form_errors(form.passwordCheck) }}
+    {{ form_widget(form.passwordCheck) }}
+</div>
+<div>
+    {% if errors is defined and errors|length > 0 %}
+        {% for error in errors %}
+            <br>{{ error }}
+        {% endfor %}
+    {% endif %}
+</div>
+{{ form_row(form.submit) }}
+
+{{ form_end(form) }}

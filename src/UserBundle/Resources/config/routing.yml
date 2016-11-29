@@ -1,0 +1,15 @@
+user_homepage:
+    path:     /homepage
+    defaults: { _controller: UserBundle:User:index }
+
+register_user:
+    path:     /register
+    defaults: { _controller: UserBundle:User:registerUser }
+
+login_user:
+    path:     /login
+    defaults: { _controller: UserBundle:User:loginUser }
+
+navigo_template:
+    path:     /template/navigo
+    defaults: { _controller: UserBundle:User:templateNavigo }

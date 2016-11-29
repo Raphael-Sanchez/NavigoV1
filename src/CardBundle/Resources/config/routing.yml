@@ -1,0 +1,3 @@
+card_homepage:
+    path:     /
+    defaults: { _controller: CardBundle:Default:index }

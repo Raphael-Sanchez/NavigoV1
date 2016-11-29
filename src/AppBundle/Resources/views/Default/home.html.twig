@@ -1,0 +1,69 @@
+<body>
+    <h1>Bienvenue sur Navigo !</h1>
+    <div><a href="{{ path('login_user') }}">Connexion</a> ou <a href="{{ path('register_user') }}">Inscription</a></div>
+    <br>
+    <h3>Vérifier la validité de votre abonnement navigo :</h3>
+    <div>
+        <form name="verif-pass-valid">
+            <label for="pass-number">Entrez votre numéro de pass navigo :</label>
+            <input type="text" name="pass-number" id="card-number">
+            <input type="button" id="btn" value="Valider">
+        </form>
+        <div id="block-response"></div>
+    </div>
+</body>
+<style>
+    body
+    {
+        background-color: #FFFFFF;
+    }
+</style>
+<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+<script>
+    $(document).ready(function(){
+
+        $('#btn').click(function () {
+
+            var cardNumb = $('#card-number').val();
+
+            var url = '{{ path('check_card_validity', {'cardNumber': 'cardNumb'}) }}';
+            urlPost = url.replace('cardNumb', cardNumb);
+
+            $.ajax({
+                url : urlPost,
+                type: "POST",
+                success: function(response)
+                {
+
+                    if(response.response == true)
+                    {
+                        var endValidityDate = response.endValidity.date;
+                        $('#block-response').html('Abonnement valide, fin de validité le : ' + endValidityDate);
+                    }
+                    else if(response.response == false)
+                    {
+                        var expiredDate = response.expiredDate.date;
+                        $('#block-response').html('Abonnement expiré depuis le : ' + expiredDate);
+                    }
+
+                    if(response.error)
+                    {
+                        var errorMsg = response.error;
+                        $('#block-response').html(errorMsg);
+                    }
+
+                },
+                error: function (error)
+                {
+                    if(error)
+                    {
+                        $('#block-response').html('Oops, une erreur semble survenue veuillez réiterer');
+                    }
+                }
+            });
+
+        });
+
+    });
+</script>
+
