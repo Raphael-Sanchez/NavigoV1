@@ -4,8 +4,9 @@ namespace CardBundle\Controller;
 
 use AppBundle\Controller\AppController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\BrowserKit\Request;
 
-class DefaultController extends AppController
+class CardController extends AppController
 {
     public function indexAction()
     {
