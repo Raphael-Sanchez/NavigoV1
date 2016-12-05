@@ -58,7 +58,7 @@ class UserController extends AppController
                     $cardEntity = $this->getDoctrine()->getManager()->getRepository('CardBundle:Card')->findBy(array("cardNumber" => $cardNumberOfForm));
 
                     $user->setLastName(strtoupper($formData->getLastName()));
-                    $user->setFirstName($formData->getFirstName());
+                    $user->setFirstName(ucfirst($formData->getFirstName()));
                     $user->setRole('ROLE_USER');
                     $user->setPasswordCheck('NULL');
                     $options = [
@@ -70,7 +70,7 @@ class UserController extends AppController
                     $user->setPassword($passwordHash);
                     $user->setCard($cardEntity[0]);
 
-                    $cardEntity[0]->setUser($user);
+//                    $cardEntity[0]->setUser($user);
 
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($user);

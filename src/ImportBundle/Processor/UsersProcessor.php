@@ -47,8 +47,8 @@ class UsersProcessor
                 $password = uniqid();
 
                 $user = new User();
-                $user->setFirstname(strtoupper($splitUsername[0]));
-                $user->setLastname(ucfirst($splitUsername[1]));
+                $user->setFirstname(ucfirst($splitUsername[0]));
+                $user->setLastname(strtoupper($splitUsername[1]));
                 $user->setRole('ROLE_USER');
                 $user->setPasswordCheck('NULL');
                     $options = [
