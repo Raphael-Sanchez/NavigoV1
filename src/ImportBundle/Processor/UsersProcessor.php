@@ -48,7 +48,7 @@ class UsersProcessor
 
                 $user = new User();
                 $user->setFirstname(strtoupper($splitUsername[0]));
-                $user->setLastname($splitUsername[1]);
+                $user->setLastname(ucfirst($splitUsername[1]));
                 $user->setRole('ROLE_USER');
                 $user->setPasswordCheck('NULL');
                     $options = [
