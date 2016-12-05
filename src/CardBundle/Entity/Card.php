@@ -26,6 +26,7 @@ class Card
 
     /**
      * @ORM\OneToOne(targetEntity="UserBundle\Entity\User", mappedBy="card")
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $user;
 

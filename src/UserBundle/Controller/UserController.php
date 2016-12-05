@@ -57,7 +57,7 @@ class UserController extends AppController
                     $cardNumberOfForm = $formData->getCard()->getCardNumber();
                     $cardEntity = $this->getDoctrine()->getManager()->getRepository('CardBundle:Card')->findBy(array("cardNumber" => $cardNumberOfForm));
 
-                    $user->setLastName($formData->getLastName());
+                    $user->setLastName(strtoupper($formData->getLastName()));
                     $user->setFirstName($formData->getFirstName());
                     $user->setRole('ROLE_USER');
                     $user->setPasswordCheck('NULL');

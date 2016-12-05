@@ -131,6 +131,7 @@ class User
      */
     public function setCard($card)
     {
+        $card->setUser($this);
         $this->card = $card;
     }
 
