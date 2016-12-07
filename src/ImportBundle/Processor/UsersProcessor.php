@@ -51,11 +51,7 @@ class UsersProcessor
                 $user->setLastname(strtoupper($splitUsername[1]));
                 $user->setRole('ROLE_USER');
                 $user->setPasswordCheck('NULL');
-                    $options = [
-                        'cost' => 8,
-                        'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
-                    ];
-                $passwordHash = password_hash($password, PASSWORD_BCRYPT, $options);
+                $passwordHash = hash("sha256", $password);
                 $user->setPasswordHash('NULL');
                 $user->setPassword($passwordHash);
                 $user->setCard($cards[$key]);
