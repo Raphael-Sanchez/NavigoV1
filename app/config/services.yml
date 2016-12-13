@@ -10,3 +10,6 @@ services:
     users_processor:
         class: ImportBundle\Processor\UsersProcessor
         arguments: ['@service_container']
+    api_controller:
+        class: ApiBundle\ApiController
+        arguments: ['@service_container']

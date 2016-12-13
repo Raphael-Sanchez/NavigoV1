@@ -1,0 +1,3 @@
+api_homepage:
+    path:     /validity/{cardNumber}
+    defaults: { _controller: ApiBundle:Api:IsCardValid }

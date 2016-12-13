@@ -1,3 +1,7 @@
+api:
+    resource: "@ApiBundle/Resources/config/routing.yml"
+    prefix:   /api
+
 card:
     resource: "@CardBundle/Resources/config/routing.yml"
     prefix:   /card
