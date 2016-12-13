@@ -37,23 +37,23 @@ class UsersProcessor
 
         while ($offset < $limit) {
 
-            $cards = $this->em->getRepository('CardBundle:Card')->findBy(array("user" => null), null, 100);
-			$tabContentSlice = array_slice($tabContentWithoutDuplicateEntry, $offset, 100);
+            $cards = $this->em->getRepository('CardBundle:Card')->findBy(array("user" => null), null, 20);
+			$tabContentSlice = array_slice($tabContentWithoutDuplicateEntry, $offset, 20);
             $count = 0;
+
+            ini_set('memory_limit', -1);
 
             foreach ($tabContentSlice as $key => $username) {
                 $count++;
                 $splitUsername = explode(' ', $username);
-                $password = uniqid();
 
                 $user = new User();
-                $user->setFirstname(ucfirst($splitUsername[0]));
-                $user->setLastname(strtoupper($splitUsername[1]));
+                $user->setFirstname(ucfirst($splitUsername[1]));
+                $user->setLastname(strtoupper($splitUsername[0]));
                 $user->setRole('ROLE_USER');
                 $user->setPasswordCheck('NULL');
-                $passwordHash = hash("sha256", $password);
                 $user->setPasswordHash('NULL');
-                $user->setPassword($passwordHash);
+                $user->setPassword(hash("sha256", uniqid()));
                 $user->setCard($cards[$key]);
 
                 $this->em->persist($user);
@@ -61,8 +61,9 @@ class UsersProcessor
                     $this->em->flush();
                     $count = 0;
                 }
+
             }
-            
+
             $this->em->clear();
 
             $currentTime = microtime(true);
@@ -71,7 +72,7 @@ class UsersProcessor
             $startCurrent = $currentTime;
 
             var_dump('Depuis :' . round($totalTime, 2) . ' mn, Requete courante :' . round($time, 2) . ' s, total entrées : ' . $offset . '/' . $limit);
-			$offset += 100;
+			$offset += 20;
     	}
 		
     }
