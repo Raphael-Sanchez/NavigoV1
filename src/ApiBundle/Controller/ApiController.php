@@ -3,6 +3,7 @@
 namespace ApiBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\DependencyInjection\Dump\Container;
 
@@ -29,18 +30,12 @@ class ApiController extends Controller
 
             if ($dateEndValidityClient > $actualDate)
             {
-                return true;
-            }
-            else
-            {
-                return false;
+                return new JsonResponse(array('success' => true));
             }
 
         }
-        else
-        {
-            return false;
-        }
+
+        return new JsonResponse(array('success' => false));
     }
 
 }

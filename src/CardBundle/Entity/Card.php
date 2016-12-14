@@ -2,6 +2,7 @@
 
 namespace CardBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -61,6 +62,17 @@ class Card
      * )
      */
     private $photo;
+
+    /**
+     * @ORM\OneToMany(targetEntity="InvoiceBundle\Entity\Invoice", mappedBy="card", cascade={"persist"})
+     */
+    public $invoices;
+
+
+    public function __construct()
+    {
+        $this->invoices = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -173,4 +185,30 @@ class Card
     {
         $this->lastSubscription = $lastSubscription;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getInvoices()
+    {
+        return $this->invoices;
+    }
+
+    /**
+     * @param mixed $invoices
+     */
+    public function setInvoices($invoices)
+    {
+        $this->invoices = $invoices;
+    }
+
+    /**
+     * @param $invoices
+     */
+    public function addInvoices($invoice)
+    {
+        $this->invoices[] = $invoice;
+        return $this;
+    }
+
 }

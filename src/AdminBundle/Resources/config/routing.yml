@@ -1,0 +1,7 @@
+admin_homepage:
+    path:     /
+    defaults: { _controller: AdminBundle:Admin:index }
+
+search_and_filter:
+    path:     /search/and/filter
+    defaults: { _controller: AdminBundle:Admin:searchAndFilter }

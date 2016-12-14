@@ -20,6 +20,8 @@ class AppKernel extends Kernel
             new CardBundle\CardBundle(),
             new ImportBundle\ImportBundle(),
             new ApiBundle\ApiBundle(),
+            new InvoiceBundle\InvoiceBundle(),
+            new AdminBundle\AdminBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

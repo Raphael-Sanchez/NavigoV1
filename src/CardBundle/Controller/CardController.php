@@ -3,8 +3,10 @@
 namespace CardBundle\Controller;
 
 use AppBundle\Controller\AppController;
+use InvoiceBundle\Entity\Invoice;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\EventListener\ValidateRequestListener;
 
 class CardController extends AppController
 {
@@ -65,9 +67,8 @@ class CardController extends AppController
             }
             else
             {
-
                 $cardNumber = $user['cardNumber'];
-                $cardEntity = $this->getDoctrine()->getManager()->getRepository('CardBundle:Card')->findBy(array("cardNumber" => $cardNumber));
+                $cardEntity = $this->getDoctrine()->getManager()->getRepository('CardBundle:Card')->findOneBy(array("cardNumber" => $cardNumber));
 
                 switch ($durationSubscription) {
                     case 'one-week':
@@ -81,23 +82,32 @@ class CardController extends AppController
                         break;
                 }
 
-                if ($cardEntity[0]->getEndValidity() != NULL)
+                if ($cardEntity->getEndValidity() != NULL)
                 {
-                    $endValidity = $cardEntity[0]->getEndValidity();
-                    $newEndValidity = $endValidity->add(new \DateInterval($dateInterval));
-                    $cardEntity[0]->setEndValidity($newEndValidity);
+                    $endValidity = $cardEntity->getEndValidity();
+                    $endValidity->add(new \DateInterval($dateInterval));
+                    $newDate = clone $endValidity;
+                    $cardEntity->setEndValidity($newDate);
+
+                    $strDate = date('d-m-Y', date_create()->getTimestamp());
+                    $newInvoice = new Invoice();
+                    $newInvoice->setCard($cardEntity);
+                    $newInvoice->setPaymentDate($strDate);
+//                    $newInvoice->setEndValiditySubscription($newEndValidity);
+                    $cardEntity->addInvoices($newInvoice);
                 }
                 else
                 {
                     $actualDate = date_create();
                     $actualDate->format('Y-m-d H:i:s');
                     $newEndValidity = $actualDate->add(new \DateInterval($dateInterval));
+                    $cardEntity->setEndValidity($newEndValidity);
                 }
 
-                $cardEntity[0]->setLastSubscription($dateInterval);
-                $success = 'Votre abonnement à été mis à jour avec succès !';
+
+                $cardEntity->setLastSubscription($dateInterval);
+
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($cardEntity[0]);
                 $em->flush();
 
                 return $this->redirectToRoute("user_homepage");

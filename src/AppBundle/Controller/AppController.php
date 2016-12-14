@@ -51,7 +51,8 @@ class AppController extends Controller
                 {
                     if ($user['role'] != $needPermission)
                     {
-                        return $this->accessDeniedAction();
+                        //return $this->accessDeniedAction();
+                        return false;
                     }
 
                     if ($user['role'] == $needPermission)

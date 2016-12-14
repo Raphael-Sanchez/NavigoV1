@@ -30,10 +30,14 @@ class UserController extends AppController
             if ($cardEntity[0]->getEndValidity() != NULL)
             {
                 $cardEndValidity = $cardEntity[0]->getEndValidity();
-                $cardEndValidityFormat = $cardEndValidity->format('l-t-F-Y');
+                $cardEndValidityFormat = $cardEndValidity->format('d-m-Y');
             }
 
             return $this->render('UserBundle:Default:index.html.twig', array('user' => $user, 'cardEndValidity' => $cardEndValidityFormat));
+        }
+        else if ($this->isAuthorize('ROLE_ADMIN'))
+        {
+            return $this->render('AdminBundle:Default:index.html.twig', array());
         }
         else
         {
@@ -105,6 +109,10 @@ class UserController extends AppController
         if($this->isAuthorize('ROLE_USER'))
         {
             return $this->redirectToRoute("user_homepage");
+        }
+        else if ($this->isAuthorize('ROLE_ADMIN'))
+        {
+            return $this->redirectToRoute("admin_homepage");
         }
         else
         {

@@ -1,3 +1,11 @@
+admin:
+    resource: "@AdminBundle/Resources/config/routing.yml"
+    prefix:   /admin
+
+invoice:
+    resource: "@InvoiceBundle/Resources/config/routing.yml"
+    prefix:   /invoice
+
 api:
     resource: "@ApiBundle/Resources/config/routing.yml"
     prefix:   /api
