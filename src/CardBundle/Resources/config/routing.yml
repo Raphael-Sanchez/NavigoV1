@@ -1,3 +1,11 @@
-card_homepage:
-    path:     /
-    defaults: { _controller: CardBundle:Card:index }
+#card_homepage:
+#    path:     /
+#    defaults: { _controller: CardBundle:Card:index }
+
+card_subscription:
+    path:     /subscription
+    defaults: { _controller: CardBundle:Card:cardSubscription }
+
+proceed_card_subscription:
+    path:     /subscription/proceed
+    defaults: { _controller: CardBundle:Card:ifCardFormSubscriptionIsValid }

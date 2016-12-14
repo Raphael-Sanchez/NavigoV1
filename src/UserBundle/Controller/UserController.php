@@ -23,7 +23,17 @@ class UserController extends AppController
         if($this->isAuthorize('ROLE_USER'))
         {
             $user = $_SESSION['user'];
-            return $this->render('UserBundle:Default:index.html.twig', array('user' => $user));
+            $cardNumber = $user['cardNumber'];
+            $cardEntity = $this->getDoctrine()->getManager()->getRepository('CardBundle:Card')->findBy(array("cardNumber" => $cardNumber));
+            $cardEndValidityFormat = null;
+
+            if ($cardEntity[0]->getEndValidity() != NULL)
+            {
+                $cardEndValidity = $cardEntity[0]->getEndValidity();
+                $cardEndValidityFormat = $cardEndValidity->format('l-t-F-Y');
+            }
+
+            return $this->render('UserBundle:Default:index.html.twig', array('user' => $user, 'cardEndValidity' => $cardEndValidityFormat));
         }
         else
         {

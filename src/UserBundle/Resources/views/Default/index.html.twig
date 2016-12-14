@@ -3,4 +3,10 @@
     <div><a href="{{ path('logout') }}">Se déconnecter</a></div>
     <br>
     <a href="{{ path('navigo_template') }}">Afficher mon Pass Navigo</a>
+    <br>
+    <a href="{{ path('card_subscription') }}">Paiement Abonnement</a>
+    {% if cardEndValidity is defined and cardEndValidity is not null %}
+    <h3>Informations</h3>
+        <p>Votre abonnement prend fin le <strong>{{ cardEndValidity }}</strong></p>
+    {% endif %}
 </body>

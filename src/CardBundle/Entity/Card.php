@@ -45,6 +45,12 @@ class Card
     protected $endValidity;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $lastSubscription;
+
+    /**
      * @ORM\Column(type="string", nullable=true)
      *
      * @Assert\File(
@@ -150,5 +156,21 @@ class Card
     public function setPhoto($photo)
     {
         $this->photo = $photo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastSubscription()
+    {
+        return $this->lastSubscription;
+    }
+
+    /**
+     * @param mixed $lastSubscription
+     */
+    public function setLastSubscription($lastSubscription)
+    {
+        $this->lastSubscription = $lastSubscription;
     }
 }
