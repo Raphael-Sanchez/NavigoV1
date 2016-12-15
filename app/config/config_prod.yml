@@ -18,6 +18,7 @@ monolog:
         main:
             type:         fingers_crossed
             action_level: error
+            nested:
             handler:      nested
         nested:
             type:  stream
