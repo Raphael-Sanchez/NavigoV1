@@ -1,35 +1,41 @@
 <body>
     <h1>Renouvellement Abonnement</h1>
     <br>
+    <h2>Abonnements</h2>
+    {% if endCardValidity is defined and endCardValidity is not null and endCardValidity == 'can_subscribe' %}
+        <form action="{{ path("proceed_card_subscription") }}" method="POST" name="form-card-subscription">
+            <select name="select">
+                <option value="one-week" selected>Abonnement 1 semaine, <strong>22,15€</strong></option>
+                <option value="one-month">Abonnement 1 mois, <strong>73€</strong></option>
+                <option value="one-year">Abonnement 1 an, <strong>803€</strong></option>
+            </select>
+            <h2>Informations de paiement</h2>
+            <label for="card-nmb">
+                Nº de carte bancaire
+                <input type="text" id="card-nmb" minlength="16" maxlength="16" size="20" placeholder="6455102049493047" name="bank-cardnumber">
+            </label>
+            <br>
+            <label for="exp-month">
+                Mois d'expiration
+                <input type="text" id="exp-month" minlength="2" maxlength="2" size="2" placeholder="09" name="exp-month">
+            </label>
+            <br>
+            <label for="exp-year">
+                Année d'expiration
+                <input type="text" id="exp-year" minlength="4" maxlength="4" size="4" placeholder="2016" name="exp-year">
+            </label>
+            <br>
+            <br>
+            <input type="submit" value="Valider">
+        </form>
+    {% elseif endCardValidity is defined and endCardValidity is not null and endCardValidity == 'can_not_subscribe' %}
+        Votre abonnement est valide, vous pourrez procéder à un rechargement 3 jours avant sa fin de validité.
+    {% endif %}
+    <br>
     {% if errors is defined and errors is not null %}
+        <strong>Erreurs :</strong>
         {% for error in errors %}
             <p>{{ error }}</p>
         {% endfor %}
     {% endif %}
-    <h2>Abonnements</h2>
-    <form action="{{ path("proceed_card_subscription") }}" method="POST" name="form-card-subscription">
-        <select name="select">
-            <option value="one-week" selected>Abonnement 1 semaine, <strong>22,15€</strong></option>
-            <option value="one-month">Abonnement 1 mois, <strong>73€</strong></option>
-            <option value="one-year">Abonnement 1 an, <strong>803€</strong></option>
-        </select>
-        <h2>Informations de paiement</h2>
-        <label for="card-nmb">
-            Nº de carte bancaire
-            <input type="text" id="card-nmb" minlength="16" maxlength="16" size="20" placeholder="6455102049493047" name="bank-cardnumber">
-        </label>
-        <br>
-        <label for="exp-month">
-            Mois d'expiration
-            <input type="text" id="exp-month" minlength="2" maxlength="2" size="2" placeholder="09" name="exp-month">
-        </label>
-        <br>
-        <label for="exp-year">
-            Année d'expiration
-            <input type="text" id="exp-year" minlength="4" maxlength="4" size="4" placeholder="2016" name="exp-year">
-        </label>
-        <br>
-        <br>
-        <input type="submit" value="Valider">
-    </form>
 </body>

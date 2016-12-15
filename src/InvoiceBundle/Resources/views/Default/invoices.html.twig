@@ -1,0 +1,26 @@
+<h1>Mes Factures</h1>
+<br>
+{% if invoices is defined and invoices is not null and invoices|length > 0 %}
+    <table>
+        <thead>
+            <tr>
+                <th>Date de Paiement</th>
+                <th>Montant</th>
+                <th>Type d'abonnement</th>
+                <th>Fin de validité</th>
+            </tr>
+        </thead>
+    {% for invoice in invoices %}
+        <tbody>
+            <tr>
+                {% if invoice.paymentDate is defined and invoice.paymentDate is not null %}<td>{{ invoice.paymentDate|replace({'-': '/'}) }}</td>{% endif %}
+                {% if invoice.subscriptionType is defined and invoice.subscriptionType is not null %}<td>{% if invoice.subscriptionType == "P1M" %}73€{% elseif invoice.subscriptionType == "P1Y"%}803€{% else %}22,15€{% endif %}</td>{% endif %}
+                {% if invoice.subscriptionType is defined and invoice.subscriptionType is not null %}<td>{% if invoice.subscriptionType == "P1M" %}1 Mois{% elseif invoice.subscriptionType == "P1Y"%}1 An{% else %}1 Semaine{% endif %}</td>{% endif %}
+                {% if invoice.endValiditySubscription is defined and invoice.endValiditySubscription is not null %}<td>{{ invoice.endValiditySubscription|date("m/d/Y") }}</td>{% endif %}
+            <tr>
+        </tbody>
+    {% endfor %}
+    </table>
+{% else %}
+    <br>Aucune factures.
+{% endif %}

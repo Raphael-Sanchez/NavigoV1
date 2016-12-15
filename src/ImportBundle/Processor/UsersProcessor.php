@@ -64,6 +64,8 @@ class UsersProcessor
 
             }
 
+            // FLUSH + PERSIST ICI ?
+
             $this->em->clear();
 
             $currentTime = microtime(true);

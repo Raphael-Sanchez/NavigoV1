@@ -5,6 +5,8 @@
     <a href="{{ path('navigo_template') }}">Afficher mon Pass Navigo</a>
     <br>
     <a href="{{ path('card_subscription') }}">Paiement Abonnement</a>
+    <br>
+    <a href="{{ path('all_invoices', {'cardNumber': user.cardNumber }) }}">Mes Factures</a>
     {% if cardEndValidity is defined and cardEndValidity is not null %}
     <h3>Informations</h3>
         <p>Votre abonnement prend fin le <strong>{{ cardEndValidity }}</strong></p>

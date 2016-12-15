@@ -16,9 +16,28 @@ class CardController extends AppController
         if($this->isAuthorize('ROLE_USER'))
         {
             $user = $_SESSION['user'];
+            $cardNumber = $user['cardNumber'];
+            $cardEntity = $this->getDoctrine()->getManager()->getRepository('CardBundle:Card')->findOneBy(array("cardNumber" => $cardNumber));
+            $endCardValidity = 'can_not_subscribe';
 
-            return $this->render('CardBundle:Form:card_subscription.html.twig', array('user' => $user));
+            if (isset($cardEntity) and $cardEntity->getEndValidity() != NULL)
+            {
+                $actualDate = date_create();
+                $actualDate->format('Y-m-d H:i:s');
+                $dateMore3 = $actualDate->add(new \DateInterval('P3D'));
+                $endValidity = $cardEntity->getEndValidity();
 
+                if($endValidity <= $dateMore3)
+                {
+                    $endCardValidity = 'can_subscribe';
+                }
+            }
+            elseif (isset($cardEntity) and $cardEntity->getEndValidity() == NULL)
+            {
+                $endCardValidity = 'can_subscribe';
+            }
+
+            return $this->render('CardBundle:Form:card_subscription.html.twig', array('user' => $user, 'endCardValidity' => $endCardValidity));
         }
         else
         {
@@ -63,7 +82,10 @@ class CardController extends AppController
 
             if (count($errors) > 0)
             {
-                return $this->render('CardBundle:Form:card_subscription.html.twig', array('user' => $user, 'errors' => $errors));
+                $cardNumber = $user['cardNumber'];
+                $cardEntity = $this->getDoctrine()->getManager()->getRepository('CardBundle:Card')->findOneBy(array("cardNumber" => $cardNumber));
+                $endCardValidity = $cardEntity->getEndValidity();
+                return $this->render('CardBundle:Form:card_subscription.html.twig', array('user' => $user, 'errors' => $errors, 'endCardValidity' => $endCardValidity));
             }
             else
             {
@@ -88,24 +110,24 @@ class CardController extends AppController
                     $endValidity->add(new \DateInterval($dateInterval));
                     $newDate = clone $endValidity;
                     $cardEntity->setEndValidity($newDate);
-
-                    $strDate = date('d-m-Y', date_create()->getTimestamp());
-                    $newInvoice = new Invoice();
-                    $newInvoice->setCard($cardEntity);
-                    $newInvoice->setPaymentDate($strDate);
-//                    $newInvoice->setEndValiditySubscription($newEndValidity);
-                    $cardEntity->addInvoices($newInvoice);
                 }
                 else
                 {
                     $actualDate = date_create();
                     $actualDate->format('Y-m-d H:i:s');
-                    $newEndValidity = $actualDate->add(new \DateInterval($dateInterval));
-                    $cardEntity->setEndValidity($newEndValidity);
+                    $newDate = $actualDate->add(new \DateInterval($dateInterval));
+                    $cardEntity->setEndValidity($newDate);
                 }
 
-
                 $cardEntity->setLastSubscription($dateInterval);
+
+                $strDate = date('d-m-Y', date_create()->getTimestamp());
+                $newInvoice = new Invoice();
+                $newInvoice->setCard($cardEntity);
+                $newInvoice->setPaymentDate($strDate);
+                $newInvoice->setEndValiditySubscription($newDate);
+                $newInvoice->setSubscriptionType($dateInterval);
+                $cardEntity->addInvoices($newInvoice);
 
                 $em = $this->getDoctrine()->getManager();
                 $em->flush();

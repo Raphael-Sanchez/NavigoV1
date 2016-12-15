@@ -31,25 +31,18 @@ class Invoice
      */
     protected $paymentDate;
 
-//    /**
-//     * @var \DateTime
-//     *
-//     * @ORM\Column(name="endValiditySubscription", type="datetime", nullable=false)
-//     */
-//    protected $endValiditySubscription;
-////
-//    /**
-//     * @var string
-//     * @ORM\Column(type="string", nullable=false)
-//     */
-//    protected $subscriptionsType;
-//
-//    /**
-//     * @var \DateTime
-//     *
-//     * @ORM\Column(name="endValidity", type="datetime", nullable=false)
-//     */
-//    protected $endValiditySubscriptions;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="endValiditySubscription", type="datetime", nullable=false)
+     */
+    protected $endValiditySubscription;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", nullable=false)
+     */
+    protected $subscriptionType;
 
     /**
      * @return mixed
@@ -97,10 +90,38 @@ class Invoice
     public function setCard($card)
     {
         $this->card = $card;
-//        $card->invoices[] = $this;
     }
 
+    /**
+     * @return \DateTime
+     */
+    public function getEndValiditySubscription()
+    {
+        return $this->endValiditySubscription;
+    }
 
+    /**
+     * @param \DateTime $endValiditySubscription
+     */
+    public function setEndValiditySubscription($endValiditySubscription)
+    {
+        $this->endValiditySubscription = $endValiditySubscription;
+    }
 
+    /**
+     * @return string
+     */
+    public function getSubscriptionType()
+    {
+        return $this->subscriptionType;
+    }
+
+    /**
+     * @param string $subscriptionType
+     */
+    public function setSubscriptionType($subscriptionType)
+    {
+        $this->subscriptionType = $subscriptionType;
+    }
 
 }
