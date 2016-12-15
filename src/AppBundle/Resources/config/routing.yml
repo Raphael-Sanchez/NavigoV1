@@ -2,10 +2,6 @@ app_homepage:
     path:     /
     defaults: { _controller: AppBundle:App:home }
 
-access_denied:
-    path:     /access/denied
-    defaults: { _controller: AppBundle:App:accessDenied }
-
 logout:
     path:    /logout
     defaults: { _controller: AppBundle:App:logout }

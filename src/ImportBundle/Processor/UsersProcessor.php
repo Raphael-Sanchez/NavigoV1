@@ -76,6 +76,8 @@ class UsersProcessor
             var_dump('Depuis :' . round($totalTime, 2) . ' mn, Requete courante :' . round($time, 2) . ' s, total entrées : ' . $offset . '/' . $limit);
 			$offset += 20;
     	}
+
+        $this->em->flush();
 		
     }
 }

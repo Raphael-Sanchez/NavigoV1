@@ -26,13 +26,6 @@ class AppController extends Controller
         }
     }
 
-    public function accessDeniedAction()
-    {
-        var_dump('acces refuse retourner erreur 403');
-        die();
-        return $this->render('AppBundle:Default:403.html.twig');
-    }
-
     protected function isAuthorize($needPermission = 'noNeedAuthentication')
     {
         if (isset($_SESSION))
@@ -51,7 +44,6 @@ class AppController extends Controller
                 {
                     if ($user['role'] != $needPermission)
                     {
-                        //return $this->accessDeniedAction();
                         return false;
                     }
 
@@ -63,7 +55,6 @@ class AppController extends Controller
             }
             else
             {
-                // L'utilisateur n'a pas l'authorisation je renvoie false, (mettre flashbag)
                 return false;
             }
         }
